@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h2>人员列表</h2>
+        <input type="text" placeholder="请输入姓名" v-model="keyword">
+        <ul>
+            <li v-for="(p,index) of filPersons" :key="p.id">
+                {{p.name}}-{{p.age}}-{{p.sex}}
+            </li>
+        </ul>
+    </div>
+</body>
+<script>
+/*     const vm = new Vue({
+        el:'#root',
+        data:{
+            keyword:'',
+            persons:[
+                {id:'001',name:'马冬梅',age:19,sex:'女'},
+				{id:'002',name:'周冬雨',age:20,sex:'女'},
+				{id:'003',name:'周杰伦',age:21,sex:'男'},
+				{id:'004',name:'温兆伦',age:22,sex:'男'}
+        ],
+            filPersons:[]
+        },
+        watch:{
+            keyword:{
+                immediate:true,//初始化时让handler立即调用，时persons中的数据在页面直接加载出来
+                handler(newValue){
+                    this.filPersons = this.persons.filter(p=>
+                    {  console.log(this);//此处的filter应使用箭头函数this指向vue实例，普通函数this指向window会出现问题
+                        return  p.name.indexOf(newValue)!==-1;//第一次newValue的值为空,在indexOf()方法中若传入空值，不会返回-1，返回值为0，匹配数组中的所有项，
+                    }
+                    )
+                }
+            }
+        }
+    }) */
+
+
+      //使用计算属性实现
+      new Vue({
+				el:'#root',
+				data:{
+					keyword:'',
+					persons:[
+						{id:'001',name:'马冬梅',age:19,sex:'女'},
+						{id:'002',name:'周冬雨',age:20,sex:'女'},
+						{id:'003',name:'周杰伦',age:21,sex:'男'},
+						{id:'004',name:'温兆伦',age:22,sex:'男'}
+					],
+                /*     filPersons:[] */
+                    
+				},
+            computed:{
+            filPersons(){
+                return this.persons.filter((p)=>{
+                  return p.name.indexOf(this.keyword)!== -1;  //使用计算属性的简写的形式，默认getter，当有读取filPersons值时就会调用
+                })
+            }
+            }
+            
+            })
+</script>
+</html>
